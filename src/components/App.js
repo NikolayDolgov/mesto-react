@@ -10,7 +10,8 @@ class App extends React.Component {
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
-      isDeletePlacePopupOpen: false
+      isDeletePlacePopupOpen: false,
+      isImagePopupOpen: false
     }
 
     this.closeAllPopups = {
@@ -18,23 +19,15 @@ class App extends React.Component {
     }
   }
 
-
   render() {
     return (
-  <html lang="ru">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Место</title>
-    </head>
-    <body>
-      <div class="root">
+    <div lang="ru">
+      <div className="root">
         <Header />
         <Main isPopupOpen = {this.isPopupOpen} closeAllPopups = {this.closeAllPopups}/>
         <Footer />
       </div>
-    </body>
-  </html>
+    </div>
   );
   }
 }

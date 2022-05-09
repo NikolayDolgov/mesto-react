@@ -2,10 +2,28 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import {api} from '../utils/Api.js';
+import Card from './Card';
 
 class Main extends React.Component {
 	constructor(props) {
     super(props);
+
+    this.state = {
+      onEditAvatar: this.props.isPopupOpen.isEditAvatarPopupOpen,
+      onAddPlace: this.props.isPopupOpen.isAddPlacePopupOpen,
+      onDelete: this.props.isPopupOpen.isDeletePlacePopupOpen,
+      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen,
+      closeAllPopups: this.props.closeAllPopups.isCloseAll,
+
+      onImagePopup: this.props.isPopupOpen.isEditImagePopupOpen,
+
+      userName: 'Имя',
+      userDescription: 'О себе',
+      userAvatar: '',
+      cards: [],
+
+      selectedCard: ''
+    }
 
     api.getUser()
     .then((res) => {
@@ -20,8 +38,6 @@ class Main extends React.Component {
       console.log(err);
     });
 
-    
-
     // отрисовка карточек
       Promise.all([api.getUser(), api.getInitialCards()]) // не проверено
       .then(([userData, cards]) => {
@@ -30,19 +46,8 @@ class Main extends React.Component {
       const cardArray = [];
 
       cards.forEach(card => {
-        
-        cardArray.push(<li class="elements__element">
-        <button type="button" aria-label="Удалить" class="elements__button-delete"></button>
-        <img class="elements__img" src={card.link} />
-        <div class="elements__interaction">
-          <h2 class="elements__text">{card.name}</h2>
-          <div class="elements__like-group">
-            <button type="button" aria-label="Оценить" class="elements__button-view"></button>
-            <p class="elements__like-quantity">{card.likes.length}</p>
-          </div>
-        </div>
-        </li>)
-
+        this.card = card;
+        cardArray.push(<Card card = {this.card} key={this.card._id} selectedCard={this.onStateImagePopup} />)
       });
       this.setState({cards: cardArray});
       })
@@ -50,53 +55,34 @@ class Main extends React.Component {
         console.log(err);
       })
 
-    this.state = {
-      onEditAvatar: this.props.isPopupOpen.isEditAvatarPopupOpen,
-      onAddPlace: this.props.isPopupOpen.isAddPlacePopupOpen,
-      onDelete: this.props.isPopupOpen.isDeletePlacePopupOpen,
-      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen,
-      closeAllPopups: this.props.closeAllPopups.isCloseAll,
-
-      userName: 'Имя',
-      userDescription: 'О себе',
-      userAvatar: '',
-      cards: []
-    }
+    
     
   }
 
   onEditAvatar = () => {
     this.setState({
       onEditAvatar: true,
-      onAddPlace: this.props.isPopupOpen.isAddPlacePopupOpen,
-      onDelete: this.props.isPopupOpen.isDeletePlacePopupOpen,
-      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen
     });
   };
 
   onAddPlace = () => {
     this.setState({
-      onEditAvatar: this.props.isPopupOpen.isEditAvatarPopupOpen,
+
       onAddPlace: true,
-      onDelete: this.props.isPopupOpen.isDeletePlacePopupOpen,
-      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen
+
+
     });
   };
 
   onDelete = () => {
     this.setState({
-      onEditAvatar: this.props.isPopupOpen.isEditAvatarPopupOpen,
-      onAddPlace: this.props.isPopupOpen.isAddPlacePopupOpen,
       onDelete: true,
-      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen
+
     });
   };
 
   onEditProfile = () => {
     this.setState({
-      onEditAvatar: this.props.isPopupOpen.isEditAvatarPopupOpen,
-      onAddPlace: this.props.isPopupOpen.isAddPlacePopupOpen,
-      onDelete: this.props.isPopupOpen.isDeletePlacePopupOpen,
       onEditProfile: true
     });
   };
@@ -106,28 +92,36 @@ class Main extends React.Component {
       onEditAvatar: this.props.isPopupOpen.isEditAvatarPopupOpen,
       onAddPlace: this.props.isPopupOpen.isAddPlacePopupOpen,
       onDelete: this.props.isPopupOpen.isDeletePlacePopupOpen,
-      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen
+      onEditProfile: this.props.isPopupOpen.isEditProfilePopupOpen,
+      onImagePopup: this.props.isPopupOpen.isEditImagePopupOpen
+    });
+  };
+
+  onStateImagePopup = () => {
+
+    this.setState({
+      onImagePopup: true,
+      selectedCard:  this.card
     });
   };
 
   render(){ 
     
     return (
-      <main class="content">
-        <ImagePopup />
-        <section class="profile">
-          <div class="profile__avatar-hover" onClick={this.onEditAvatar}>
-            <img src={this.state.userAvatar} alt="Аватар" class="profile__avatar" />
+      <main className="content">
+        <section className="profile">
+          <div className="profile__avatar-hover" onClick={this.onEditAvatar}>
+            <img src={this.state.userAvatar} alt="Аватар" className="profile__avatar" />
           </div>
-          <div class="profile__profile-info">
-            <h1 class="profile__title-name">{this.state.userName}</h1>
-            <button type="button" aria-label="Изменить" class="profile__button-name" onClick={this.onEditProfile}></button>
-            <p class="profile__text">{this.state.userDescription}</p>
+          <div className="profile__profile-info">
+            <h1 className="profile__title-name">{this.state.userName}</h1>
+            <button type="button" aria-label="Изменить" className="profile__button-name" onClick={this.onEditProfile}></button>
+            <p className="profile__text">{this.state.userDescription}</p>
           </div>
-          <button type="button" aria-label="Добавить" class="profile__add-button" onClick={this.onAddPlace}></button>
+          <button type="button" aria-label="Добавить" className="profile__add-button" onClick={this.onAddPlace}></button>
         </section>
-        <section class="photo">
-          <ul class="elements">
+        <section className="photo">
+          <ul className="elements">
             
           {this.state.cards}
 
@@ -139,6 +133,7 @@ class Main extends React.Component {
         {this.state.onAddPlace && <PopupWithForm name="add" title="Новое место" button="Создать" isOpen='popup_opened' onClose={this.state.closeAllPopups}/>}
         {this.state.onEditProfile && ((!this.state.closeAllPopups) &&(this.state.onEditProfile = false))}
         <PopupWithForm name="confirm-deletion" title="Вы уверены?" button="Да" isOpen=''/>
+        {this.state.onImagePopup && <ImagePopup cardElement={this.state.selectedCard} isOpen='popup_opened' onClose={this.state.closeAllPopups}/>}
       </main>);
   }
 }
