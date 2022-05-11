@@ -3,24 +3,12 @@ import React from 'react';
 class PopupWithForm extends React.Component {
 	constructor(props) {
     super(props);
-    
-    this.state = {
-      closeAllPopups: false
-    }
-    
   }
 
-  closeAllPopups = () => {
-    console.log('dd');
-    this.setState({
-      closeAllPopups: !this.state.closeAllPopups
-    });
-  };
-
   render() {
-    return (<><section className={`popup popup_task_${this.props.name} ${this.props.isOpen && 'popup_opened'}`}>
+    return (<section className={`popup popup_task_${this.props.name} ${this.props.isOpen && 'popup_opened'}`}>
       <div className="popup__container">
-        <button type="button" aria-label="Закрыть" className="popup__close" onClick={this.closeAllPopups}></button>
+        <button type="button" aria-label="Закрыть" className="popup__close" onClick={this.props.onClose}></button>
         <form name={`${this.props.name}`}  className="popup__form" id={`${this.props.name}`} noValidate>
           <h2 className="popup__heading">{`${this.props.title}`}</h2>
           
@@ -51,9 +39,7 @@ class PopupWithForm extends React.Component {
           <button type="submit" aria-label={`${this.props.button}`} className="popup__button">{`${this.props.button}`}</button>
         </form>
       </div>
-      {this.state.closeAllPopups && (document.querySelector(`.popup_task_${this.props.name}`).classList.remove('popup_opened'), this.state.closeAllPopups = false)}
-    </section>
-</>)
+    </section>)
 	}
 }
   
