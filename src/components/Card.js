@@ -1,23 +1,24 @@
 import React from 'react';
 
-class Card extends React.Component {
-	constructor(props) {
-    super(props);
-  }
+function Card(props) {
+  
+  function handleClick() {
+    props.onCardClick(props.card);
+    console.log(props.card);
+  } 
 
-  render(){ 
-    return (<li className="elements__element" >
-    <button type="button" aria-label="Удалить" className="elements__button-delete"></button>
-    <img className="elements__img" src={`${this.props.card.link}`} onClick={this.props.selectedCard}/>
+  return (<li className="elements__element" key={props.card._id}>
+    <button type="button" aria-label="Удалить" className="elements__button-delete" onClick={props.onCardDeleteClick}></button>
+    <img className="elements__img" src={props.card.link} onClick={handleClick}/>
     <div className="elements__interaction">
-      <h2 className="elements__text">{`${this.props.card.name}`}</h2>
+      <h2 className="elements__text">{props.card.name}</h2>
       <div className="elements__like-group">
         <button type="button" aria-label="Оценить" className="elements__button-view"></button>
-        <p className="elements__like-quantity">{`${this.props.card.likes.length}`}</p>
+        <p className="elements__like-quantity">{props.card.likes.length}</p>
       </div>
     </div>
-    </li>);
-  }
+    </li>
+  );
 }
   
 export default Card;
