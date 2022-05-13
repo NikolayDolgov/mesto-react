@@ -4,12 +4,11 @@ function Card(props) {
   
   function handleClick() {
     props.onCardClick(props.card);
-    console.log(props.card);
   } 
 
-  return (<li className="elements__element" key={props.card._id}>
+  return (<li className="elements__element">
     <button type="button" aria-label="Удалить" className="elements__button-delete" onClick={props.onCardDeleteClick}></button>
-    <img className="elements__img" src={props.card.link} onClick={handleClick}/>
+    <img alt={props.card.name} className="elements__img" src={props.card.link} onClick={handleClick}/>
     <div className="elements__interaction">
       <h2 className="elements__text">{props.card.name}</h2>
       <div className="elements__like-group">
