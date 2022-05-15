@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup(props) {
@@ -7,6 +7,11 @@ function AddPlacePopup(props) {
   const [place, setPlace] = useState('');
   const [link, setLink] = useState('');
 
+  useEffect(() => {
+    setPlace('');
+    setLink('');
+  }, [props.isOpen]);
+
   function handleChangePlace(e) {
     setPlace(e.target.value);
   }
@@ -14,7 +19,6 @@ function AddPlacePopup(props) {
   function handleChangeLink(e) {
     setLink(e.target.value);
   }
-
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -27,8 +31,6 @@ function AddPlacePopup(props) {
       name: place,
       link: link
     });
-    setPlace('');
-    setLink('');
   }
 
   return (

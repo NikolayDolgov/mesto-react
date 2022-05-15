@@ -24,12 +24,11 @@ function EditProfilePopup(props) {
       setName(currentUser.name);
     if(currentUser.about != undefined)
       setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-  
     // Передаём значения управляемых компонентов во внешний обработчик
     props.onUpdateUser({
       name: name,

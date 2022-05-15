@@ -1,10 +1,14 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup(props) {
 
   const [link, setLink] = useState(''); // использую, для очищения попапа после submit
   const avatarRef = useRef();
+
+  useEffect(() => {
+    setLink('');
+  }, [props.isOpen]);
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -14,7 +18,6 @@ function EditAvatarPopup(props) {
     props.onUpdateAvatar({
       avatar: avatarRef.current.value
     });
-    setLink('');
   }
 
   function handleChangeLink(e) {

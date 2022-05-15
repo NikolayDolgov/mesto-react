@@ -33,6 +33,13 @@ function App() {
       })
       .catch(err => {
         console.log(err);
+      });
+    api.getUser()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) =>{
+        console.log(err);
       })
     }, []);
 
@@ -59,16 +66,6 @@ function App() {
       });
     }
   ////
-
-  useEffect(() => {
-    api.getUser()
-    .then((res) => {
-      setCurrentUser(res);
-    })
-    .catch((err) =>{
-      console.log(err);
-    });
-    }, []);
 
   function handleEditAvatarClick(){
     setIsEditAvatarPopupOpen(true);
@@ -98,7 +95,6 @@ function App() {
   }
 
   function handleUpdateUser(userData){
-    console.log(userData);
     api.putchtUser(userData)
     .then((res) => {
       setCurrentUser(res);
@@ -110,7 +106,6 @@ function App() {
   }
 
   function handleUpdateAvatar(userAvatar){
-    console.log(userAvatar);
     api.updateAvatar(userAvatar.avatar)
     .then((res) => {
       setCurrentUser(res);
@@ -123,7 +118,6 @@ function App() {
   }
 
   function handleAddPlace(newCard){
-    console.log(newCard);
     api.postCard(newCard)
     .then((res) => {
       setCards([res, ...cards]);
