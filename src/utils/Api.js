@@ -51,7 +51,7 @@ class Api {
     .then(this._checkResponse)
   }
 
-  addLike(cardId) {
+  /*addLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {headers: this._headers,
       method: 'PUT'})
     .then(this._checkResponse)
@@ -61,6 +61,19 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {headers: this._headers,
       method: 'DELETE'})
     .then(this._checkResponse)
+  }*/
+
+  changeLikeCardStatus(cardId, isLiked){
+    if(isLiked){
+      return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {headers: this._headers,
+        method: 'PUT'})
+      .then(this._checkResponse)
+    }
+    else{
+      return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {headers: this._headers,
+        method: 'DELETE'})
+      .then(this._checkResponse)
+    }
   }
 
   updateAvatar(avatar) {
